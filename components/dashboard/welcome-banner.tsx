@@ -69,7 +69,7 @@ export function WelcomeBanner() {
                     Sepet
                   </Link>
                   <div className="rounded-lg border border-emerald-500/20 bg-emerald-500/5 px-3 py-1 text-[12px] font-semibold text-emerald-200">
-                    Zil -> Ödemeler
+                  Zil → Ödemeler
                   </div>
                 </div>
               </div>
