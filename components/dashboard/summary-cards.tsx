@@ -104,7 +104,10 @@ export function SummaryCards() {
     {
       title: "Potansiyel Tasarruf",
       value: `₺${data.potentialSavings.toLocaleString("tr-TR")}`,
-      subtitle: "İyileştirilebilir tasarruf tutarı",
+      subtitle:
+        data.totalSpending === 0
+          ? "İlk harcamanızı ekleyin, hesaplansın"
+          : "İyileştirilebilir tasarruf tutarı",
       icon: TrendingUp,
       gradient: "from-emerald-500/15 via-emerald-500/5 to-transparent",
       border: "border-emerald-500/20",

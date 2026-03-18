@@ -175,6 +175,12 @@ export function SavingsCoach() {
             <p className="text-3xl font-extrabold tracking-tight text-emerald-400">
               ₺{potentialSavings.toLocaleString("tr-TR")}
             </p>
+            {potentialSavings === 0 && (
+              <p className="mt-2 text-[12px] leading-relaxed text-emerald-200/80">
+                Bu değer, bu ay eklediğiniz değişken giderlere göre hesaplanır.
+                Henüz veri yoksa 0 görünebilir.
+              </p>
+            )}
           </div>
         </div>
       </CardContent>

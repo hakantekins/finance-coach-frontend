@@ -36,9 +36,43 @@ export function WelcomeBanner() {
                 Hoş geldiniz
               </p>
               <p className="mt-1 text-sm leading-relaxed text-zinc-200">
-                Önce gelirinizi ekleyin, ardından giderlerinizi AI ile analiz
-                edip tasarruf hedefinizi takip etmeye başlayın.
+                Önce birkaç temel kayıt ekleyin: gelir/gider, yaklaşan ödemeler
+                ve alışveriş notları. Sonra AI Koçu size kısa ve anlaşılır
+                tasarruf önerileri verir.
               </p>
+
+              {/* Yeni kullanıcı hızlı rehberi (yüzeysel) */}
+              <div className="mt-4 flex flex-col gap-2">
+                <div className="text-[12px] font-semibold text-zinc-100">
+                  Sık kullanacağınız yerler
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  <Link
+                    href="/expenses"
+                    onClick={handleClose}
+                    className="rounded-lg border border-emerald-500/20 bg-emerald-500/5 px-3 py-1 text-[12px] font-semibold text-emerald-200 transition hover:bg-emerald-500/10"
+                  >
+                    Harcamalar
+                  </Link>
+                  <Link
+                    href="/coach"
+                    onClick={handleClose}
+                    className="rounded-lg border border-emerald-500/20 bg-emerald-500/5 px-3 py-1 text-[12px] font-semibold text-emerald-200 transition hover:bg-emerald-500/10"
+                  >
+                    AI Koç
+                  </Link>
+                  <Link
+                    href="/cart"
+                    onClick={handleClose}
+                    className="rounded-lg border border-emerald-500/20 bg-emerald-500/5 px-3 py-1 text-[12px] font-semibold text-emerald-200 transition hover:bg-emerald-500/10"
+                  >
+                    Sepet
+                  </Link>
+                  <div className="rounded-lg border border-emerald-500/20 bg-emerald-500/5 px-3 py-1 text-[12px] font-semibold text-emerald-200">
+                    Zil -> Ödemeler
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
