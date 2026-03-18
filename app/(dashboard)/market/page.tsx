@@ -119,105 +119,201 @@ export default function MarketPage() {
           yükleniyor...
         </div>
       ) : (
-        <div className="rounded-2xl border border-zinc-800 bg-zinc-900 overflow-x-auto">
-          {/* Header */}
-          <div className="grid grid-cols-7 gap-4 border-b border-zinc-800 bg-zinc-800/40 px-5 py-3 min-w-[720px]">
-            <div className="col-span-2 text-xs font-bold uppercase tracking-wider text-zinc-500">
-              Ürün
-            </div>
-            {STORES.map((s) => (
-              <div key={s} className="flex items-center justify-center gap-1.5">
-                <StoreLogo name={s} />
-                <span
-                  className={`text-xs font-bold ${storeConfig[s].color}`}
-                >
-                  {s}
-                </span>
+        <div className="rounded-2xl border border-zinc-800 bg-zinc-900 overflow-hidden">
+          {/* Desktop (sm+) - tek satır tablo düzeni */}
+          <div className="hidden sm:block">
+            {/* Header */}
+            <div className="grid grid-cols-7 gap-3 border-b border-zinc-800 bg-zinc-800/40 px-4 py-3">
+              <div className="col-span-2 text-xs font-bold uppercase tracking-wider text-zinc-500">
+                Ürün
               </div>
-            ))}
-            <div className="text-right text-xs font-bold uppercase tracking-wider text-emerald-500">
-              Tasarruf
+              {STORES.map((s) => (
+                <div key={s} className="flex items-center justify-center gap-1.5">
+                  <StoreLogo name={s} />
+                  <span className={`text-xs font-bold ${storeConfig[s].color}`}>
+                    {s}
+                  </span>
+                </div>
+              ))}
+              <div className="text-right text-xs font-bold uppercase tracking-wider text-emerald-500">
+                Tasarruf
+              </div>
+            </div>
+
+            {/* Satırlar */}
+            <div className="divide-y divide-zinc-800/60">
+              {data.length === 0 ? (
+                <div className="flex flex-col items-center justify-center py-16 text-zinc-600">
+                  <ShoppingCart className="mb-3 h-10 w-10" />
+                  <p className="text-sm">Henüz veri yok.</p>
+                </div>
+              ) : (
+                data.map((item) => (
+                  <div
+                    key={item.productName}
+                    className="group grid grid-cols-7 gap-3 items-center px-4 py-4 transition-colors hover:bg-zinc-800/30"
+                  >
+                    {/* Ürün */}
+                    <div className="col-span-2">
+                      <p className="text-sm font-semibold text-zinc-100">
+                        {item.productName}
+                      </p>
+                      {item.unit && (
+                        <p className="text-xs text-zinc-600">({item.unit})</p>
+                      )}
+                    </div>
+
+                    {/* Market fiyatları */}
+                    {STORES.map((store) => {
+                      const price = item.marketPrices[store];
+                      const isCheapest = item.cheapestMarket === store;
+                      return (
+                        <div
+                          key={store}
+                          className="text-center min-w-0 overflow-hidden whitespace-nowrap"
+                        >
+                          {price !== undefined && price !== null ? (
+                            <div
+                              className={`inline-flex items-center gap-1 rounded-lg px-2 py-1 ${
+                                isCheapest
+                                  ? "bg-emerald-500/15 ring-1 ring-emerald-500/30"
+                                  : ""
+                              }`}
+                            >
+                              {isCheapest && (
+                                <Star className="h-2.5 w-2.5 text-emerald-400" />
+                              )}
+                              <span
+                                className={`text-xs font-bold ${
+                                  isCheapest ? "text-emerald-400" : "text-zinc-400"
+                                }`}
+                              >
+                                ₺{price.toFixed(2)}
+                              </span>
+                            </div>
+                          ) : (
+                            <span className="text-xs text-zinc-700">—</span>
+                          )}
+                        </div>
+                      );
+                    })}
+
+                    {/* Tasarruf */}
+                    <div className="text-right">
+                      {item.priceDifference !== undefined &&
+                      item.priceDifference !== null &&
+                      item.priceDifference > 0 ? (
+                        <div className="inline-flex items-center gap-1">
+                          <TrendingDown className="h-3 w-3 text-emerald-400" />
+                          <span className="text-xs font-bold text-emerald-400">
+                            ₺{item.priceDifference.toFixed(2)}
+                          </span>
+                        </div>
+                      ) : (
+                        <span className="text-xs text-zinc-700">—</span>
+                      )}
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           </div>
 
-          {/* Satırlar */}
-          <div className="divide-y divide-zinc-800/60">
-            {data.length === 0 ? (
-              <div className="flex flex-col items-center justify-center py-16 text-zinc-600">
-                <ShoppingCart className="mb-3 h-10 w-10" />
-                <p className="text-sm">Henüz veri yok.</p>
+          {/* Mobile (base-sm) - üst üste binmeden 4 marketi ayrı satırda göster */}
+          <div className="block sm:hidden">
+            <div className="px-4 py-3">
+              <div className="text-xs font-bold uppercase tracking-wider text-zinc-500 mb-3">
+                Ürün ve mağaza fiyatları
               </div>
-            ) : (
-              data.map((item) => (
-                <div
-                  key={item.productName}
-                  className="group grid grid-cols-7 gap-4 items-center px-5 py-4 transition-colors hover:bg-zinc-800/30 min-w-[720px]"
-                >
-                  {/* Ürün */}
-                  <div className="col-span-2">
-                    <p className="text-sm font-semibold text-zinc-100">
-                      {item.productName}
-                    </p>
-                    {item.unit && (
-                      <p className="text-xs text-zinc-600">({item.unit})</p>
-                    )}
+              <div className="grid grid-cols-4 gap-2">
+                {STORES.map((s) => (
+                  <div key={s} className="flex items-center justify-center gap-1.5">
+                    <StoreLogo name={s} />
+                    <span className={`text-[10px] font-bold ${storeConfig[s].color}`}>
+                      {s}
+                    </span>
                   </div>
+                ))}
+              </div>
+            </div>
 
-                  {/* Market fiyatları */}
-                  {STORES.map((store) => {
-                    const price = item.marketPrices[store];
-                    const isCheapest = item.cheapestMarket === store;
-                    return (
-                      <div
-                        key={store}
-                        className="text-center min-w-0 overflow-hidden whitespace-nowrap"
-                      >
-                        {price !== undefined && price !== null ? (
-                          <div
-                            className={`inline-flex items-center gap-1 rounded-lg px-2 py-1 sm:px-1 sm:py-1 ${
-                              isCheapest
-                                ? "bg-emerald-500/15 ring-1 ring-emerald-500/30"
-                                : ""
-                            }`}
-                          >
-                            {isCheapest && (
-                              <Star className="h-2.5 w-2.5 text-emerald-400" />
-                            )}
-                            <span
-                              className={`text-xs sm:text-sm font-bold ${
-                                isCheapest
-                                  ? "text-emerald-400"
-                                  : "text-zinc-400"
-                              }`}
-                            >
-                              ₺{price.toFixed(2)}
-                            </span>
-                          </div>
-                        ) : (
-                          <span className="text-xs text-zinc-700">—</span>
-                        )}
-                      </div>
-                    );
-                  })}
-
-                  {/* Tasarruf */}
-                  <div className="text-right">
-                    {item.priceDifference !== undefined &&
-                    item.priceDifference !== null &&
-                    item.priceDifference > 0 ? (
-                      <div className="inline-flex items-center gap-1">
-                        <TrendingDown className="h-3 w-3 text-emerald-400" />
-                        <span className="text-xs sm:text-sm font-bold text-emerald-400">
-                          ₺{item.priceDifference.toFixed(2)}
-                        </span>
-                      </div>
-                    ) : (
-                      <span className="text-xs text-zinc-700">—</span>
-                    )}
-                  </div>
+            <div className="divide-y divide-zinc-800/60">
+              {data.length === 0 ? (
+                <div className="flex flex-col items-center justify-center py-16 text-zinc-600">
+                  <ShoppingCart className="mb-3 h-10 w-10" />
+                  <p className="text-sm">Henüz veri yok.</p>
                 </div>
-              ))
-            )}
+              ) : (
+                data.map((item) => (
+                  <div key={item.productName} className="px-4 py-4">
+                    {/* Ürün */}
+                    <div className="mb-3">
+                      <p className="text-sm font-semibold text-zinc-100">
+                        {item.productName}
+                      </p>
+                      {item.unit && (
+                        <p className="text-xs text-zinc-600">({item.unit})</p>
+                      )}
+                    </div>
+
+                    {/* Market fiyatları */}
+                    <div className="grid grid-cols-4 gap-2">
+                      {STORES.map((store) => {
+                        const price = item.marketPrices[store];
+                        const isCheapest = item.cheapestMarket === store;
+                        return (
+                          <div
+                            key={store}
+                            className="text-center min-w-0 overflow-hidden whitespace-nowrap"
+                          >
+                            {price !== undefined && price !== null ? (
+                              <div
+                                className={`inline-flex items-center justify-center gap-1 rounded-lg px-2 py-1 w-full ${
+                                  isCheapest
+                                    ? "bg-emerald-500/15 ring-1 ring-emerald-500/30"
+                                    : ""
+                                }`}
+                              >
+                                {isCheapest && (
+                                  <Star className="h-2 w-2 text-emerald-400" />
+                                )}
+                                <span
+                                  className={`text-[11px] font-bold ${
+                                    isCheapest
+                                      ? "text-emerald-400"
+                                      : "text-zinc-400"
+                                  }`}
+                                >
+                                  ₺{price.toFixed(2)}
+                                </span>
+                              </div>
+                            ) : (
+                              <span className="text-xs text-zinc-700">—</span>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    {/* Tasarruf */}
+                    <div className="mt-3 flex justify-end">
+                      {item.priceDifference !== undefined &&
+                      item.priceDifference !== null &&
+                      item.priceDifference > 0 ? (
+                        <div className="inline-flex items-center gap-1">
+                          <TrendingDown className="h-3 w-3 text-emerald-400" />
+                          <span className="text-xs font-bold text-emerald-400">
+                            ₺{item.priceDifference.toFixed(2)}
+                          </span>
+                        </div>
+                      ) : (
+                        <span className="text-xs text-zinc-700">—</span>
+                      )}
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
           </div>
         </div>
       )}
