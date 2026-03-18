@@ -68,7 +68,7 @@ export function MarketComparison() {
           <ShoppingCart className="h-5 w-5 text-emerald-400" />
           <div>
             <CardTitle className="text-lg text-zinc-100">
-              Akıllı Market Karşılaştırması
+              Akıllı Mağaza Karşılaştırması
             </CardTitle>
             <CardDescription className="text-zinc-400">
               Süpermarketler arasındaki fiyatları karşılaştırın ve en ucuz

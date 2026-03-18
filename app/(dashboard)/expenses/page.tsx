@@ -37,6 +37,7 @@ interface Transaction {
   description: string;
   transactionDate: string;
   isRecurring?: boolean;
+  paymentMethod?: "CASH" | "CARD";
   recurringDay?: number;
 }
 
@@ -44,7 +45,7 @@ type Filter = "ALL" | "INCOME" | "EXPENSE";
 type FormTab = "EXPENSE" | "INCOME";
 
 const expenseCategories = [
-  "Market",
+  "Mağaza",
   "Kira",
   "Fatura",
   "Ulaşım",
@@ -55,6 +56,12 @@ const expenseCategories = [
   "Eğitim",
   "Diğer",
 ];
+
+function displayCategory(category?: string) {
+  // Eski kayıtlar "Market" olarak tutulmuş olabilir.
+  if (category === "Market") return "Mağaza";
+  return category ?? "—";
+}
 const incomeCategories = [
   "Maaş",
   "Serbest Çalışma",
@@ -89,6 +96,7 @@ export default function ExpensesPage() {
     amount: "",
     priority: "",
     description: "",
+    paymentMethod: "CASH" as "CASH" | "CARD",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -145,8 +153,16 @@ export default function ExpensesPage() {
         transactionDate: new Date().toISOString().split("T")[0],
         isRecurring,
         recurringDay: isRecurring ? parseInt(recurringDay) : null,
+        paymentMethod:
+          formTab === "EXPENSE" ? form.paymentMethod : undefined,
       });
-      setForm({ category: "", amount: "", priority: "", description: "" });
+      setForm({
+        category: "",
+        amount: "",
+        priority: "",
+        description: "",
+        paymentMethod: "CASH",
+      });
       setIsRecurring(false);
       setRecurringDay("");
       setShowForm(false);
@@ -183,7 +199,7 @@ export default function ExpensesPage() {
       if (!searchQuery.trim()) return true;
       const q = searchQuery.toLowerCase();
       return (
-        t.category?.toLowerCase().includes(q) ||
+        displayCategory(t.category).toLowerCase().includes(q) ||
         t.description?.toLowerCase().includes(q)
       );
     });
@@ -240,6 +256,7 @@ export default function ExpensesPage() {
                     amount: "",
                     priority: "",
                     description: "",
+                    paymentMethod: "CASH",
                   });
                   setIsRecurring(false);
                   setRecurringDay("");
@@ -336,6 +353,35 @@ export default function ExpensesPage() {
                         {val} - {label}
                       </SelectItem>
                     ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
+
+            {formTab === "EXPENSE" && mounted && (
+              <div className="space-y-2">
+                <Label className="text-xs font-semibold uppercase tracking-wider text-zinc-500">
+                  Ödeme Yöntemi
+                </Label>
+                <Select
+                  value={form.paymentMethod}
+                  onValueChange={(v) =>
+                    setForm((prev) => ({
+                      ...prev,
+                      paymentMethod: v as "CASH" | "CARD",
+                    }))
+                  }
+                >
+                  <SelectTrigger className="border-zinc-700 bg-zinc-800 text-zinc-100">
+                    <SelectValue placeholder="Seçiniz" />
+                  </SelectTrigger>
+                  <SelectContent className="border-zinc-800 bg-zinc-900">
+                    <SelectItem value="CASH" className="text-zinc-100">
+                      Nakit
+                    </SelectItem>
+                    <SelectItem value="CARD" className="text-zinc-100">
+                      Kart
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -555,7 +601,7 @@ export default function ExpensesPage() {
                     <div>
                       <div className="flex items-center gap-2">
                         <p className="text-sm font-semibold text-zinc-100">
-                          {t.category ?? "—"}
+                          {displayCategory(t.category)}
                         </p>
                         {t.isRecurring && (
                           <span className="flex items-center gap-1 rounded-full bg-violet-500/10 px-2 py-0.5 text-[10px] font-medium text-violet-400">
@@ -568,6 +614,9 @@ export default function ExpensesPage() {
                       </div>
                       <p className="text-xs text-zinc-500">
                         {t.description ? `${t.description} · ` : ""}
+                        {t.type === "EXPENSE"
+                          ? `${t.paymentMethod === "CARD" ? "Kart" : "Nakit"} · `
+                          : ""}
                         {formatDate(t.transactionDate)}
                       </p>
                     </div>

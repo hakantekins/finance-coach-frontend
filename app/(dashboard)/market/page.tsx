@@ -87,9 +87,9 @@ export default function MarketPage() {
   return (
     <div className="mx-auto max-w-6xl space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-zinc-100">Market Fiyatları</h1>
+        <h1 className="text-2xl font-bold text-zinc-100">Mağaza Fiyatları</h1>
         <p className="text-sm text-zinc-500">
-          Marketler arası fiyat karşılaştırması — en ucuz seçeneği bulun
+          Mağazalar arası fiyat karşılaştırması — en ucuz seçeneği bulun
         </p>
       </div>
 
@@ -224,7 +224,7 @@ export default function MarketPage() {
             💡 Tasarruf İpucu
           </p>
           <p className="text-sm text-zinc-300">
-            Tüm ürünleri en ucuz marketten alarak toplam{" "}
+            Tüm ürünleri en ucuz mağazadan alarak toplam{" "}
             <span className="font-bold text-emerald-400">
               ₺{data.reduce((s, d) => s + d.priceDifference, 0).toFixed(2)}
             </span>{" "}
@@ -241,15 +241,15 @@ export default function MarketPage() {
             <p className="text-xs font-semibold text-zinc-400">Yasal Uyarı</p>
             <p className="text-[11px] leading-relaxed text-zinc-600">
               Bu sayfadaki fiyat bilgileri yalnızca bilgilendirme amaçlıdır ve
-              herhangi bir satış taahhüdü içermez. Fiyatlar, ilgili marketlerin
-              online platformlarından ve kamuya açık kaynaklardan otomatik
+              herhangi bir satış taahhüdü içermez. Fiyatlar, ilgili mağazaların
+              çevrimiçi platformlarından ve kamuya açık kaynaklardan otomatik
               olarak derlenmekte olup anlık değişiklik gösterebilir. AI Finans
               Koçu, fiyatların doğruluğunu, güncelliğini veya eksiksizliğini
-              garanti etmez. Gösterilen market isimleri ve logoları ilgili
+              garanti etmez. Gösterilen mağaza isimleri ve logoları ilgili
               şirketlerin tescilli markalarıdır; bu platform söz konusu
               markalarla herhangi bir ticari ortaklık, sponsorluk veya bağlantı
               ilişkisine sahip değildir. Satın alma kararlarınızı vermeden önce
-              güncel fiyatlar için ilgili marketlerin resmi web siteleri veya
+              güncel fiyatlar için ilgili mağazaların resmi web siteleri veya
               mobil uygulamalarını kontrol etmenizi öneririz.
             </p>
           </div>

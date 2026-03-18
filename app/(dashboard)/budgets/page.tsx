@@ -59,7 +59,7 @@ const statusConfig = {
 };
 
 const suggestedCategories = [
-  "Market",
+  "Mağaza",
   "Ulaşım",
   "Fatura",
   "Kira",
@@ -72,6 +72,12 @@ const suggestedCategories = [
   "Yemek",
   "Abonelik",
 ];
+
+function displayCategory(category: string) {
+  // Eski kayıtlar "Market" olarak tutulmuş olabilir.
+  if (category === "Market") return "Mağaza";
+  return category;
+}
 
 export default function BudgetsPage() {
   const [budgets, setBudgets] = useState<Budget[]>([]);
@@ -238,7 +244,7 @@ export default function BudgetsPage() {
               type="text"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              placeholder="Örn: Market, Ulaşım, Fatura..."
+              placeholder="Örn: Mağaza, Ulaşım, Fatura..."
               className="w-full rounded-xl border border-zinc-700 bg-zinc-800 px-4 py-3 text-zinc-100 placeholder-zinc-600 focus:border-emerald-500/50 focus:outline-none focus:ring-2 focus:ring-emerald-500/20"
             />
             {/* Hızlı seçim */}
@@ -326,7 +332,7 @@ export default function BudgetsPage() {
                     {/* Üst: Kategori + Durum */}
                     <div className="flex items-center gap-2 mb-3">
                       <p className="text-base font-bold text-zinc-100">
-                        {budget.category}
+                        {displayCategory(budget.category)}
                       </p>
                       <span
                         className={`rounded-lg px-2 py-0.5 text-[10px] font-bold ${cfg.bg} ${cfg.color}`}
@@ -374,7 +380,7 @@ export default function BudgetsPage() {
                       %{budget.usagePercent}
                     </span>
                     <button
-                      onClick={() => handleDelete(budget.id, budget.category)}
+                      onClick={() => handleDelete(budget.id, displayCategory(budget.category))}
                       disabled={deletingId === budget.id}
                       className="rounded-lg p-2 text-zinc-600 transition hover:bg-red-500/10 hover:text-red-400 disabled:opacity-50"
                     >

@@ -31,6 +31,7 @@ interface Transaction {
   description: string;
   transactionDate: string;
   isFixed: boolean;
+  paymentMethod?: "CASH" | "CARD";
   createdAt: string;
   updatedAt: string;
 }
@@ -54,6 +55,7 @@ export function ExpensePanel({ onTransactionAdded }: Props) {
   const [amount, setAmount] = useState("");
   const [priority, setPriority] = useState("");
   const [isFixed, setIsFixed] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState<"CASH" | "CARD">("CASH");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [deletingId, setDeletingId] = useState<number | null>(null);
   const [fetchError, setFetchError] = useState(false);
@@ -107,12 +109,14 @@ export function ExpensePanel({ onTransactionAdded }: Props) {
         isFixed,
         isRecurring,
         recurringDay: isRecurring ? recurringDay : null,
+        paymentMethod,
       });
 
       setExpenseName("");
       setAmount("");
       setPriority("");
       setIsFixed(false);
+      setPaymentMethod("CASH");
       setIsRecurring(false);
       setRecurringDay(new Date().getDate());
       await fetchExpenses();
@@ -209,6 +213,15 @@ export function ExpensePanel({ onTransactionAdded }: Props) {
                         {formatDate(expense.transactionDate)}
                       </span>
                     </div>
+                    <span
+                      className={`ml-1 text-[10px] font-bold ${
+                        expense.paymentMethod === "CARD"
+                          ? "text-purple-400"
+                          : "text-emerald-400"
+                      }`}
+                    >
+                      {expense.paymentMethod === "CARD" ? "Kart" : "Nakit"}
+                    </span>
                   </div>
                 </TableCell>
                 <TableCell className="text-right text-sm font-bold text-red-400">
@@ -252,7 +265,7 @@ export function ExpensePanel({ onTransactionAdded }: Props) {
           <Input
             value={expenseName}
             onChange={(e) => setExpenseName(e.target.value)}
-            placeholder="Örn: Market"
+            placeholder="Örn: Mağaza"
             className="border-zinc-800 bg-zinc-900 text-zinc-100"
           />
         </div>
@@ -329,6 +342,36 @@ export function ExpensePanel({ onTransactionAdded }: Props) {
                   className={`absolute top-0.5 h-4 w-4 rounded-full bg-white shadow transition-all duration-200 ${isFixed ? "left-4" : "left-0.5"}`}
                 />
               </div>
+            </button>
+          </div>
+        </div>
+
+        <div className="space-y-2">
+          <Label className="text-zinc-400 text-xs font-semibold uppercase tracking-wider">
+            Ödeme Yöntemi
+          </Label>
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={() => setPaymentMethod("CASH")}
+              className={`flex h-10 w-full items-center justify-center rounded-lg border px-3 transition-all ${
+                paymentMethod === "CASH"
+                  ? "border-emerald-500/40 bg-emerald-500/10"
+                  : "border-zinc-800 bg-zinc-900 hover:border-zinc-700"
+              }`}
+            >
+              Nakit
+            </button>
+            <button
+              type="button"
+              onClick={() => setPaymentMethod("CARD")}
+              className={`flex h-10 w-full items-center justify-center rounded-lg border px-3 transition-all ${
+                paymentMethod === "CARD"
+                  ? "border-purple-500/40 bg-purple-500/10"
+                  : "border-zinc-800 bg-zinc-900 hover:border-zinc-700"
+              }`}
+            >
+              Kart
             </button>
           </div>
         </div>

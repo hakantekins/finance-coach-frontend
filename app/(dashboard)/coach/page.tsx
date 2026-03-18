@@ -37,7 +37,7 @@ const typeConfig = {
     border: "border-yellow-500/20",
   },
   MARKET_COMPARISON: {
-    label: "Market Karşılaştırma",
+    label: "Mağaza Karşılaştırması",
     color: "text-blue-400",
     bg: "bg-blue-500/10",
     border: "border-blue-500/20",
@@ -183,7 +183,7 @@ export default function CoachPage() {
           },
           {
             icon: ShoppingCart,
-            title: "Market Karşılaştırması",
+            title: "Mağaza Karşılaştırması",
             desc: "Süt, ekmek gibi temel ürünler için fiyat analizi",
             label: "Karşılaştır",
             color: "text-blue-400",
@@ -191,7 +191,7 @@ export default function CoachPage() {
             border: "border-blue-500/20",
             action: async () => {
               await api.get("/coach/analyze/market?product=Tam Yağlı Süt 1L");
-              toast.success("Market karşılaştırması tamamlandı!");
+              toast.success("Mağaza karşılaştırması tamamlandı!");
               fetchHistory();
             },
           },

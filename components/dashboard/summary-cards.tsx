@@ -2,8 +2,20 @@
 
 import { useEffect, useState } from "react";
 import { Progress } from "@/components/ui/progress";
-import { Wallet, TrendingUp, Brain, Target, Sparkles } from "lucide-react";
+import {
+  Wallet,
+  TrendingUp,
+  Brain,
+  Target,
+  Sparkles,
+  Info,
+} from "lucide-react";
 import { api } from "@/lib/api";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface DashboardData {
   totalSpending: number;
@@ -91,7 +103,7 @@ export function SummaryCards() {
     {
       title: "Potansiyel Tasarruf",
       value: `₺${data.potentialSavings.toLocaleString("tr-TR")}`,
-      subtitle: "Optimize edilebilir tutar",
+      subtitle: "İyileştirilebilir tasarruf tutarı",
       icon: TrendingUp,
       gradient: "from-emerald-500/15 via-emerald-500/5 to-transparent",
       border: "border-emerald-500/20",
@@ -99,6 +111,8 @@ export function SummaryCards() {
       iconColor: "text-emerald-400",
       valueColor: "text-emerald-400",
       glowColor: "shadow-emerald-500/5",
+      tooltip:
+        "Değişken giderlerinizi daha verimli hale getirerek tahmini aylık tasarruf potansiyelinizi gösterir.",
     },
     {
       title: "Harcama Skoru",
@@ -112,6 +126,8 @@ export function SummaryCards() {
       valueColor: getScoreColor(data.spendingScore),
       glowColor: "shadow-blue-500/5",
       showScoreBar: true,
+      tooltip:
+        "0-100 arası bir değerlendirmedir. Skor yükseldikçe tasarruf potansiyeli daha iyi yönetiliyor demektir.",
     },
     {
       title: "Tasarruf Hedefi",
@@ -155,9 +171,19 @@ export function SummaryCards() {
           <div className="relative">
             {/* Üst: Başlık + İkon */}
             <div className="flex items-start justify-between">
-              <p className="text-[11px] font-semibold uppercase tracking-wider text-zinc-500">
-                {card.title}
-              </p>
+              <div className="flex items-center gap-1.5">
+                <p className="text-[11px] font-semibold uppercase tracking-wider text-zinc-500">
+                  {card.title}
+                </p>
+                {(card as any).tooltip ? (
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Info className="h-3.5 w-3.5 text-zinc-600" />
+                    </TooltipTrigger>
+                    <TooltipContent>{(card as any).tooltip}</TooltipContent>
+                  </Tooltip>
+                ) : null}
+              </div>
               <div
                 className={`rounded-xl p-2.5 ring-1 ring-white/[0.06] transition-transform duration-300 group-hover:scale-110 ${card.iconBg}`}
               >

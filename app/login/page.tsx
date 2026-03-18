@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
+import Image from "next/image";
 import {
-  TrendingUp,
   Eye,
   EyeOff,
   Loader2,
@@ -44,10 +44,17 @@ export default function AuthPage() {
         {/* Logo */}
         <div className="mb-10 text-center">
           <div className="group mx-auto mb-5 flex h-[72px] w-[72px] items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-400 to-emerald-600 shadow-2xl shadow-emerald-500/30 transition-all duration-500 hover:shadow-emerald-500/50 hover:scale-105">
-            <TrendingUp className="h-9 w-9 text-white transition-transform duration-500 group-hover:rotate-12" />
+              <Image
+                src="/icon.png"
+                alt="Finans Koçu"
+                width={44}
+                height={44}
+                priority
+                className="h-[44px] w-[44px] object-contain transition-transform duration-500 group-hover:rotate-12"
+              />
           </div>
           <h1 className="text-[2rem] font-extrabold tracking-tight text-zinc-100">
-            AI Finance <span className="text-emerald-400">Coach</span>
+            AI Finans <span className="text-emerald-400">Koçu</span>
           </h1>
           <p className="mt-2 text-sm text-zinc-500">
             Finansal özgürlüğünüze giden yol
@@ -201,6 +208,7 @@ function RegisterForm({ onSuccess }: { onSuccess: () => void }) {
   });
   const [showPass, setShowPass] = useState(false);
   const [error, setError] = useState("");
+  const [passwordWarning, setPasswordWarning] = useState("");
   const [success, setSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -210,11 +218,21 @@ function RegisterForm({ onSuccess }: { onSuccess: () => void }) {
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-    if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(form.password)) {
-      setError(
-        "Şifre en az 8 karakter, bir büyük harf ve bir rakam içermelidir.",
-      );
+    setPasswordWarning("");
+
+    if (form.password.length < 8) {
+      setError("Şifre en az 8 karakter olmalıdır.");
       return;
+    }
+
+    // Soft validation: uppercase/digit is only a warning now.
+    const strengthOk = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(
+      form.password,
+    );
+    if (!strengthOk) {
+      setPasswordWarning(
+        "Şifre gücü zayıf görünüyor. Bu bir uyarıdır; isterseniz devam edebilirsiniz.",
+      );
     }
     setIsLoading(true);
     try {
@@ -363,6 +381,7 @@ function RegisterForm({ onSuccess }: { onSuccess: () => void }) {
         </div>
       </div>
 
+      {passwordWarning && <WarningBox message={passwordWarning} />}
       {error && <ErrorBox message={error} />}
 
       <SubmitButton
@@ -460,6 +479,14 @@ function PasswordStrength({ password }: { password: string }) {
 function ErrorBox({ message }: { message: string }) {
   return (
     <div className="rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-400 animate-fade-in">
+      {message}
+    </div>
+  );
+}
+
+function WarningBox({ message }: { message: string }) {
+  return (
+    <div className="rounded-xl border border-yellow-500/20 bg-yellow-500/10 px-4 py-3 text-sm text-yellow-300 animate-fade-in">
       {message}
     </div>
   );

@@ -421,6 +421,12 @@ export default function SettingsPage() {
                       {strength.label}
                     </span>
                   </p>
+                  {strength.score < 3 && (
+                    <p className="text-xs text-yellow-300">
+                      Uyarı: Şifre gücü düşük görünüyor. İsterseniz
+                      devam edebilirsiniz.
+                    </p>
+                  )}
                 </div>
               )}
             </div>
@@ -539,7 +545,7 @@ export default function SettingsPage() {
       {/* ─── Uygulama Bilgisi ──────────────────────────────────────────────── */}
       <div className="flex items-center justify-center gap-2 pb-4 text-[11px] text-zinc-700">
         <Info className="h-3 w-3" />
-        <span>AI Finance Coach v1.0 · Spring Boot + Next.js · Groq AI</span>
+        <span>AI Finans Koçu v1.0 · Spring Boot + Next.js · Groq AI</span>
       </div>
     </div>
   );

@@ -3,9 +3,9 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import {
   Bell,
-  TrendingUp,
   Menu,
   LayoutDashboard,
   Wallet,
@@ -92,10 +92,17 @@ export function Header({ onMenuClick }: HeaderProps) {
 
             <Link href="/" className="flex items-center gap-2.5">
               <div className="relative flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 shadow-lg shadow-emerald-500/30">
-                <TrendingUp className="h-4 w-4 text-white" />
+                <Image
+                  src="/icon.png"
+                  alt="Finans Koçu"
+                  width={20}
+                  height={20}
+                  className="h-4 w-4 object-contain"
+                  priority
+                />
               </div>
               <span className="hidden text-base font-bold text-zinc-100 lg:block">
-                AI Finance <span className="text-emerald-400">Coach</span>
+                AI Finans <span className="text-emerald-400">Koçu</span>
               </span>
             </Link>
           </div>

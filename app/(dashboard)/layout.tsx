@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Header } from "@/components/dashboard/header";
 import { Sidebar } from "@/components/dashboard/sidebar";
+import { FeedbackWidget } from "@/components/dashboard/feedback-widget";
 
 export default function DashboardLayout({
   children,
@@ -62,6 +63,7 @@ export default function DashboardLayout({
       )}
 
       <main className="relative px-4 py-6 lg:px-8">{children}</main>
+      <FeedbackWidget />
     </div>
   );
 }

@@ -228,7 +228,7 @@ export function UpcomingPaymentsPanel() {
               </span>
               {payment.creditLimit && (
                 <span className="text-xs text-zinc-600">
-                  / Limit: ₺{payment.creditLimit.toLocaleString("tr-TR")}
+                  / Kart limiti: ₺{payment.creditLimit.toLocaleString("tr-TR")}
                 </span>
               )}
             </div>

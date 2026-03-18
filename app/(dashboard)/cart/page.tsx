@@ -233,9 +233,9 @@ export default function CartPage() {
     <div className="mx-auto max-w-6xl space-y-6">
       {/* Başlık */}
       <div>
-        <h1 className="text-2xl font-bold text-zinc-100">Akıllı Sepet</h1>
+        <h1 className="text-2xl font-bold text-zinc-100">Alışveriş Sepeti</h1>
         <p className="text-sm text-zinc-500">
-          Ürünleri ekleyin — en ucuz marketten almanız gereken listeyi
+          Ürünleri ekleyin — en ucuz mağazadan almanız gereken listeyi
           oluşturalım
         </p>
       </div>
@@ -329,7 +329,7 @@ export default function CartPage() {
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
             <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-5">
               <p className="text-xs font-semibold uppercase tracking-wider text-emerald-400/70">
-                Optimize Edilmiş Toplam
+                Optimum Toplam
               </p>
               <p className="mt-1 text-2xl font-extrabold text-emerald-400">
                 ₺
@@ -370,10 +370,10 @@ export default function CartPage() {
             <div className="mb-4 flex items-center gap-2">
               <Sparkles className="h-4 w-4 text-emerald-400" />
               <h2 className="text-sm font-bold uppercase tracking-wider text-zinc-400">
-                Market Bazlı Alışveriş Listeniz
+                Mağaza Bazlı Alışveriş Listeniz
               </h2>
               <span className="rounded-lg bg-zinc-800 px-2 py-0.5 text-[11px] font-medium text-zinc-500">
-                {smartCart?.marketCount ?? 0} market
+                {smartCart?.marketCount ?? 0} mağaza
               </span>
             </div>
 
@@ -584,7 +584,7 @@ export default function CartPage() {
               <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0 text-zinc-600" />
               <div className="text-[11px] leading-relaxed text-zinc-600">
                 <p>
-                  Fiyatlar bilgilendirme amaçlıdır. Market sitelerinden alınan
+                  Fiyatlar bilgilendirme amaçlıdır. Mağaza sitelerinden alınan
                   veriler haftalık güncellenmektedir.
                 </p>
                 <p className="mt-0.5">

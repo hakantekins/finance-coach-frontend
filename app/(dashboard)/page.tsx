@@ -8,6 +8,7 @@ import { SavingsCoach } from "@/components/dashboard/savings-coach";
 import { UpcomingPaymentsPanel } from "@/components/dashboard/upcoming-payments-panel";
 import { SavingsChart } from "@/components/dashboard/savings-chart";
 import { IncomePanel } from "@/components/dashboard/income-panel";
+import { WelcomeBanner } from "@/components/dashboard/welcome-banner";
 
 export default function Dashboard() {
   // Gelir veya gider eklenince bu sayacı artır → SavingsChart yeniden fetch eder
@@ -20,6 +21,8 @@ export default function Dashboard() {
   return (
     <main>
       <div className="mx-auto max-w-[1600px] grid grid-cols-12 gap-6">
+        <WelcomeBanner />
+
         {/* Satır 1: Özet Kartlar */}
         <SummaryCards />
 

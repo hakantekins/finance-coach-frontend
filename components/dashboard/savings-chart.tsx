@@ -156,11 +156,16 @@ export function SavingsChart({ refreshKey = 0 }: Props) {
                   fontSize={11}
                   tickLine={false}
                   axisLine={false}
-                  tickFormatter={(value) =>
-                    value === 0
-                      ? "₺0"
-                      : `₺${value >= 1000 ? `${(value / 1000).toFixed(0)}k` : value}`
-                  }
+                  tickFormatter={(value) => {
+                    if (value === 0) return "₺0";
+                    if (value >= 1000) {
+                      const bin = (value / 1000).toLocaleString("tr-TR", {
+                        maximumFractionDigits: 1,
+                      });
+                      return `₺${bin} bin`;
+                    }
+                    return `₺${value.toLocaleString("tr-TR")}`;
+                  }}
                 />
                 <Tooltip
                   cursor={{ fill: "rgba(255,255,255,0.03)", radius: 8 }}

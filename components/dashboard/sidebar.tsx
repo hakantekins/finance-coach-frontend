@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
@@ -30,14 +31,14 @@ const menuItems = [
       { href: "/", icon: LayoutDashboard, label: "Ana Sayfa" },
       { href: "/expenses", icon: Wallet, label: "Harcamalarım" },
       { href: "/coach", icon: PiggyBank, label: "AI Koç" },
-      { href: "/cart", icon: ShoppingCart, label: "Akıllı Sepet" },
+      { href: "/cart", icon: ShoppingCart, label: "Alışveriş Sepeti" },
       { href: "/budgets", icon: PieChart, label: "Bütçe Planlama" },
     ],
   },
   {
     section: "Finansal Araçlar",
     items: [
-      { href: "/market", icon: TrendingUp, label: "Market Fiyatları" },
+      { href: "/market", icon: TrendingUp, label: "Mağaza Fiyatları" },
       { href: "/analytics", icon: BarChart3, label: "Analizler" },
       { href: "/settings", icon: Settings, label: "Ayarlar" },
     ],
@@ -80,8 +81,15 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
       {/* Üst: Logo + Kapat */}
       <div className="flex h-16 items-center justify-between border-b border-zinc-800 px-5">
         <div className="flex items-center gap-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-500 text-xs font-bold text-black">
-            AI
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-500">
+            <Image
+              src="/icon.png"
+              alt="Finans Koçu"
+              width={20}
+              height={20}
+              className="h-4 w-4 object-contain"
+              priority
+            />
           </div>
           <span className="text-base font-semibold italic tracking-tight text-zinc-100">
             Finans Koçu
