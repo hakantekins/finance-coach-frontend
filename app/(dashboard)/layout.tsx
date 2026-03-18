@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Header } from "@/components/dashboard/header";
 import { Sidebar } from "@/components/dashboard/sidebar";
 import { FeedbackWidget } from "@/components/dashboard/feedback-widget";
+import { OnboardingIntro } from "@/components/dashboard/onboarding-intro";
 
 export default function DashboardLayout({
   children,
@@ -14,7 +15,9 @@ export default function DashboardLayout({
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isChecking, setIsChecking] = useState(true);
+  const [showOnboarding, setShowOnboarding] = useState(false);
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -23,8 +26,19 @@ export default function DashboardLayout({
     } else {
       setIsAuthenticated(true);
     }
+
+    // Kayıt sonrası ilk girişte tanıtım göster.
+    const shouldShow = localStorage.getItem("onboarding_show_v1") === "1";
+    if (shouldShow && pathname === "/") {
+      setShowOnboarding(true);
+    }
     setIsChecking(false);
-  }, [router]);
+  }, [router, pathname]);
+
+  const handleDismissOnboarding = () => {
+    localStorage.setItem("onboarding_show_v1", "0");
+    setShowOnboarding(false);
+  };
 
   if (isChecking || !isAuthenticated) {
     return (
@@ -64,6 +78,12 @@ export default function DashboardLayout({
 
       <main className="relative px-4 py-6 lg:px-8">{children}</main>
       <FeedbackWidget />
+      {showOnboarding && pathname === "/" && (
+        <OnboardingIntro
+          open={showOnboarding}
+          onDismiss={handleDismissOnboarding}
+        />
+      )}
     </div>
   );
 }

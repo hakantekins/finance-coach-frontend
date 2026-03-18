@@ -2,6 +2,7 @@
 
 import { toast } from "sonner";
 import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { api } from "@/lib/api";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -88,6 +89,7 @@ export default function ExpensesPage() {
   const [confirmDeleteId, setConfirmDeleteId] = useState<number | null>(null);
   const [showForm, setShowForm] = useState(false);
   const [formTab, setFormTab] = useState<FormTab>("EXPENSE");
+  const searchParams = useSearchParams();
   const [mounted, setMounted] = useState(false);
   const [isRecurring, setIsRecurring] = useState(false);
   const [recurringDay, setRecurringDay] = useState("");
@@ -114,6 +116,15 @@ export default function ExpensesPage() {
       setIsLoading(false);
     }
   };
+
+  // Onboarding akışı için: /expenses?tab=INCOME veya /expenses?tab=EXPENSE
+  useEffect(() => {
+    const tab = searchParams.get("tab");
+    if (tab === "INCOME" || tab === "EXPENSE") {
+      setFormTab(tab);
+      setShowForm(true);
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     setMounted(true);

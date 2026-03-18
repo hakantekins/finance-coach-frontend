@@ -127,6 +127,13 @@ function LoginForm({ onSuccess }: { onSuccess: () => void }) {
         localStorage.setItem("token", token);
         const fullName = response.data?.data?.fullName;
         if (fullName) localStorage.setItem("fullName", fullName);
+
+        // Register sonrası ilk girişte onboarding gösterilsin.
+        const pending = localStorage.getItem("onboarding_pending_v1") === "1";
+        if (pending) {
+          localStorage.setItem("onboarding_show_v1", "1");
+          localStorage.removeItem("onboarding_pending_v1");
+        }
         onSuccess();
       } else {
         setError("Token alınamadı.");
@@ -245,6 +252,8 @@ function RegisterForm({ onSuccess }: { onSuccess: () => void }) {
           ? parseFloat(form.monthlySavingsGoal)
           : 0,
       });
+      // Kayıt sonrası ilk girişte onboarding'i göster.
+      localStorage.setItem("onboarding_pending_v1", "1");
       setSuccess(true);
       setTimeout(() => onSuccess(), 1500);
     } catch (err: unknown) {
