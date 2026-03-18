@@ -285,7 +285,7 @@ function RegisterForm({ onSuccess }: { onSuccess: () => void }) {
         type="text"
         value={form.fullName}
         onChange={set("fullName")}
-        placeholder="Hakan Koç"
+        placeholder="adınız soyadınız"
         autoComplete="name"
         icon={<User className="h-4 w-4" />}
       />
