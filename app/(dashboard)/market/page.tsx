@@ -129,7 +129,7 @@ export default function MarketPage() {
               <div key={s} className="flex items-center justify-center gap-1.5">
                 <StoreLogo name={s} />
                 <span
-                  className={`hidden text-xs font-bold lg:block ${storeConfig[s].color}`}
+                  className={`text-xs font-bold ${storeConfig[s].color}`}
                 >
                   {s}
                 </span>
@@ -169,7 +169,7 @@ export default function MarketPage() {
                     const isCheapest = item.cheapestMarket === store;
                     return (
                       <div key={store} className="text-center">
-                        {price ? (
+                        {price !== undefined && price !== null ? (
                           <div
                             className={`inline-flex items-center gap-1 rounded-lg px-2 py-1 ${
                               isCheapest
@@ -199,7 +199,9 @@ export default function MarketPage() {
 
                   {/* Tasarruf */}
                   <div className="text-right">
-                    {item.priceDifference > 0 ? (
+                    {item.priceDifference !== undefined &&
+                    item.priceDifference !== null &&
+                    item.priceDifference > 0 ? (
                       <div className="inline-flex items-center gap-1">
                         <TrendingDown className="h-3 w-3 text-emerald-400" />
                         <span className="text-sm font-bold text-emerald-400">
@@ -226,7 +228,10 @@ export default function MarketPage() {
           <p className="text-sm text-zinc-300">
             Tüm ürünleri en ucuz mağazadan alarak toplam{" "}
             <span className="font-bold text-emerald-400">
-              ₺{data.reduce((s, d) => s + d.priceDifference, 0).toFixed(2)}
+              ₺
+              {data
+                .reduce((s, d) => s + (d.priceDifference ?? 0), 0)
+                .toFixed(2)}
             </span>{" "}
             tasarruf edebilirsiniz.
           </p>
