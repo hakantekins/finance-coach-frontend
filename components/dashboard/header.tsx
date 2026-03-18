@@ -3,13 +3,13 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import {
   Bell,
   Menu,
   LayoutDashboard,
   Wallet,
   Brain,
+  TrendingUp,
   ShoppingCart,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -92,14 +92,7 @@ export function Header({ onMenuClick }: HeaderProps) {
 
             <Link href="/" className="flex items-center gap-2.5">
               <div className="relative flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 shadow-lg shadow-emerald-500/30">
-                <Image
-                  src="/icon.svg"
-                  alt="Finans Koçu"
-                  width={20}
-                  height={20}
-                  className="h-4 w-4 object-contain"
-                  priority
-                />
+                <TrendingUp className="h-4 w-4 text-black" strokeWidth={2.5} />
               </div>
               <span className="hidden text-base font-bold text-zinc-100 lg:block">
                 AI Finans <span className="text-emerald-400">Koçu</span>

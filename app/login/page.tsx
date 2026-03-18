@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
-import Image from "next/image";
 import {
   Eye,
   EyeOff,
@@ -13,6 +12,7 @@ import {
   ArrowRight,
   Wallet,
   Target,
+  TrendingUp,
   Mail,
   Lock,
   User,
@@ -44,13 +44,9 @@ export default function AuthPage() {
         {/* Logo */}
         <div className="mb-10 text-center">
           <div className="group mx-auto mb-5 flex h-[72px] w-[72px] items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-400 to-emerald-600 shadow-2xl shadow-emerald-500/30 transition-all duration-500 hover:shadow-emerald-500/50 hover:scale-105">
-              <Image
-                src="/icon.svg"
-                alt="Finans Koçu"
-                width={44}
-                height={44}
-                priority
-                className="h-[44px] w-[44px] object-contain transition-transform duration-500 group-hover:rotate-12"
+              <TrendingUp
+                className="h-[44px] w-[44px] text-black transition-transform duration-500 group-hover:rotate-12"
+                strokeWidth={2.5}
               />
           </div>
           <h1 className="text-[2rem] font-extrabold tracking-tight text-zinc-100">
