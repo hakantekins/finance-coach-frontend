@@ -79,6 +79,8 @@ interface TopExpense {
 interface WeeklyDailyData {
   day: string;
   amount: number;
+  isFuture?: boolean;
+  isToday?: boolean;
 }
 
 export default function AnalyticsPage() {
@@ -86,6 +88,7 @@ export default function AnalyticsPage() {
   const [monthly, setMonthly] = useState<MonthlyData[]>([]);
   const [topExpenses, setTopExpenses] = useState<TopExpense[]>([]);
   const [weeklyDaily, setWeeklyDaily] = useState<WeeklyDailyData[]>([]);
+  const [declaredMonthlyIncome, setDeclaredMonthlyIncome] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -94,11 +97,14 @@ export default function AnalyticsPage() {
       api.get("/analytics/monthly"),
       api.get("/analytics/top-expenses"),
       api.get("/analytics/weekly-daily").catch(() => ({ data: { data: [] } })),
+      api.get("/dashboard").catch(() => ({ data: { data: null } })),
     ])
-      .then(([catRes, monthRes, topRes, weeklyRes]) => {
+      .then(([catRes, monthRes, topRes, weeklyRes, dashboardRes]) => {
         setCategories(catRes.data?.data ?? []);
         setMonthly(monthRes.data?.data ?? []);
         setTopExpenses(topRes.data?.data ?? []);
+        const income = dashboardRes.data?.data?.declaredMonthlyIncome ?? 0;
+        setDeclaredMonthlyIncome(typeof income === "number" ? income : 0);
         const raw = weeklyRes.data?.data ?? [];
         setWeeklyDaily(
           Array.isArray(raw)
@@ -428,17 +434,29 @@ export default function AnalyticsPage() {
               />
               <Bar dataKey="amount" radius={[6, 6, 0, 0]}>
                 {weeklyDaily.map((entry, i) => {
-                  const max = Math.max(...weeklyDaily.map((d) => d.amount), 1);
-                  const ratio = entry.amount / max;
+                  const dailyBudget =
+                    declaredMonthlyIncome > 0
+                      ? declaredMonthlyIncome / 30
+                      : 0;
                   return (
                     <Cell
                       key={i}
                       fill={
-                        ratio > 0.8
-                          ? "#ef4444"
-                          : ratio > 0.5
-                            ? "#f59e0b"
-                            : "#10b981"
+                        entry.isFuture
+                          ? "#27272a"
+                          : entry.amount === 0
+                            ? "#3f3f46"
+                            : dailyBudget > 0
+                              ? entry.amount <= dailyBudget
+                                ? "#10b981"
+                                : entry.amount <= dailyBudget * 1.5
+                                  ? "#f59e0b"
+                                  : "#ef4444"
+                              : entry.amount > 500
+                                ? "#ef4444"
+                                : entry.amount > 200
+                                  ? "#f59e0b"
+                                  : "#10b981"
                       }
                     />
                   );

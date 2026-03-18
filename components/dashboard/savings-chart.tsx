@@ -40,16 +40,25 @@ interface Props {
 export function SavingsChart({ refreshKey = 0 }: Props) {
   const [chartData, setChartData] = useState<DayData[]>(fallbackData);
   const [isLoading, setIsLoading] = useState(true);
+  const [declaredMonthlyIncome, setDeclaredMonthlyIncome] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setIsLoading(true);
-        const response = await api.get("/analytics/weekly-daily");
-        const data = response.data?.data;
+        const [weeklyRes, dashboardRes] = await Promise.all([
+          api.get("/analytics/weekly-daily"),
+          api.get("/dashboard").catch(() => ({ data: { data: null } })),
+        ]);
+
+        const data = weeklyRes.data?.data;
         if (data && Array.isArray(data) && data.length > 0) {
           setChartData(data);
         }
+
+        const income =
+          dashboardRes.data?.data?.declaredMonthlyIncome ?? 0;
+        setDeclaredMonthlyIncome(typeof income === "number" ? income : 0);
       } catch (error) {
         console.error("Haftalık grafik çekilemedi:", error);
       } finally {
@@ -67,11 +76,21 @@ export function SavingsChart({ refreshKey = 0 }: Props) {
 
   const getBarColor = (entry: DayData) => {
     if (entry.isFuture) return "#27272a"; // zinc-800 — gelecek günler
-    if (entry.isToday) return "#10b981"; // emerald-500 — bugün
     if (entry.amount === 0) return "#3f3f46"; // zinc-700 — harcama yok
-    if (entry.amount > 500) return "#ef4444"; // red-500 — yüksek harcama
-    if (entry.amount > 200) return "#f59e0b"; // amber-500 — orta harcama
-    return "#10b981"; // emerald-500 — düşük harcama
+
+    // Renk eşiği: maaş/30
+    const dailyBudget = declaredMonthlyIncome > 0 ? declaredMonthlyIncome / 30 : 0;
+    if (dailyBudget > 0) {
+      const yellowAt = dailyBudget * 1.5;
+      if (entry.amount <= dailyBudget) return "#10b981"; // düşük
+      if (entry.amount <= yellowAt) return "#f59e0b"; // orta
+      return "#ef4444"; // yüksek
+    }
+
+    // Maaş bilgisi yoksa geçmişteki sabit eşiklere dön.
+    if (entry.amount > 500) return "#ef4444";
+    if (entry.amount > 200) return "#f59e0b";
+    return "#10b981";
   };
 
   return (
@@ -131,6 +150,7 @@ export function SavingsChart({ refreshKey = 0 }: Props) {
                       (d) => d.day === payload.value,
                     );
                     const isToday = entry?.isToday;
+                    const barColor = entry ? getBarColor(entry) : "#71717a";
                     return (
                       <g transform={`translate(${x},${y})`}>
                         <text
@@ -138,14 +158,14 @@ export function SavingsChart({ refreshKey = 0 }: Props) {
                           y={0}
                           dy={14}
                           textAnchor="middle"
-                          fill={isToday ? "#10b981" : "#71717a"}
+                          fill={isToday ? barColor : "#71717a"}
                           fontSize={12}
                           fontWeight={isToday ? 700 : 500}
                         >
                           {payload.value}
                         </text>
                         {isToday && (
-                          <circle cx={0} cy={24} r={2} fill="#10b981" />
+                          <circle cx={0} cy={24} r={2} fill={barColor} />
                         )}
                       </g>
                     );
