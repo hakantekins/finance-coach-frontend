@@ -11,8 +11,8 @@ export const metadata: Metadata = {
   description: "AI destekli finans asistanı paneli",
   generator: "v0.app",
   icons: {
-    icon: [{ url: "/icon.png", type: "image/png" }],
-    apple: "/icon.png",
+    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
+    apple: "/icon.svg",
   },
 };
 

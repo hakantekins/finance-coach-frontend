@@ -1,15 +1,12 @@
 <svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
   <style>
-    @media (prefers-color-scheme: light) {
-      .background { fill: black; }
-      .foreground { fill: white; }
-    }
-    @media (prefers-color-scheme: dark) {
-      .background { fill: white; }
-      .foreground { fill: black; }
-    }
+    /* Yeşil balonun üstünde sadece ikon çizilsin diye arka planı şeffaf bırakıyoruz. */
+    .background { fill: transparent; }
+    /* Balon içinde görünür kontrast için koyu renk seçildi. */
+    .foreground { fill: #0f172a; }
   </style>
   <g clip-path="url(#clip0_7960_43945)">
+    <!-- background intentionally transparent -->
     <rect class="background" width="180" height="180" rx="37" />
     <g style="transform: scale(95%); transform-origin: center">
       <path class="foreground"

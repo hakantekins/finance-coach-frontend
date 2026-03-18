@@ -45,7 +45,7 @@ export default function AuthPage() {
         <div className="mb-10 text-center">
           <div className="group mx-auto mb-5 flex h-[72px] w-[72px] items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-400 to-emerald-600 shadow-2xl shadow-emerald-500/30 transition-all duration-500 hover:shadow-emerald-500/50 hover:scale-105">
               <Image
-                src="/icon.png"
+                src="/icon.svg"
                 alt="Finans Koçu"
                 width={44}
                 height={44}

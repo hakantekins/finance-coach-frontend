@@ -83,7 +83,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
         <div className="flex items-center gap-2.5">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-500">
             <Image
-              src="/icon.png"
+              src="/icon.svg"
               alt="Finans Koçu"
               width={20}
               height={20}

@@ -93,7 +93,7 @@ export function Header({ onMenuClick }: HeaderProps) {
             <Link href="/" className="flex items-center gap-2.5">
               <div className="relative flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 shadow-lg shadow-emerald-500/30">
                 <Image
-                  src="/icon.png"
+                  src="/icon.svg"
                   alt="Finans Koçu"
                   width={20}
                   height={20}
