@@ -119,9 +119,9 @@ export default function MarketPage() {
           yükleniyor...
         </div>
       ) : (
-        <div className="rounded-2xl border border-zinc-800 bg-zinc-900 overflow-hidden">
+        <div className="rounded-2xl border border-zinc-800 bg-zinc-900 overflow-x-auto">
           {/* Header */}
-          <div className="grid grid-cols-7 gap-4 border-b border-zinc-800 bg-zinc-800/40 px-5 py-3">
+          <div className="grid grid-cols-7 gap-4 border-b border-zinc-800 bg-zinc-800/40 px-5 py-3 min-w-[720px]">
             <div className="col-span-2 text-xs font-bold uppercase tracking-wider text-zinc-500">
               Ürün
             </div>
@@ -151,7 +151,7 @@ export default function MarketPage() {
               data.map((item) => (
                 <div
                   key={item.productName}
-                  className="group grid grid-cols-7 gap-4 items-center px-5 py-4 transition-colors hover:bg-zinc-800/30"
+                  className="group grid grid-cols-7 gap-4 items-center px-5 py-4 transition-colors hover:bg-zinc-800/30 min-w-[720px]"
                 >
                   {/* Ürün */}
                   <div className="col-span-2">
@@ -168,10 +168,13 @@ export default function MarketPage() {
                     const price = item.marketPrices[store];
                     const isCheapest = item.cheapestMarket === store;
                     return (
-                      <div key={store} className="text-center">
+                      <div
+                        key={store}
+                        className="text-center min-w-0 overflow-hidden whitespace-nowrap"
+                      >
                         {price !== undefined && price !== null ? (
                           <div
-                            className={`inline-flex items-center gap-1 rounded-lg px-2 py-1 ${
+                            className={`inline-flex items-center gap-1 rounded-lg px-2 py-1 sm:px-1 sm:py-1 ${
                               isCheapest
                                 ? "bg-emerald-500/15 ring-1 ring-emerald-500/30"
                                 : ""
@@ -181,7 +184,7 @@ export default function MarketPage() {
                               <Star className="h-2.5 w-2.5 text-emerald-400" />
                             )}
                             <span
-                              className={`text-sm font-bold ${
+                              className={`text-xs sm:text-sm font-bold ${
                                 isCheapest
                                   ? "text-emerald-400"
                                   : "text-zinc-400"
@@ -204,7 +207,7 @@ export default function MarketPage() {
                     item.priceDifference > 0 ? (
                       <div className="inline-flex items-center gap-1">
                         <TrendingDown className="h-3 w-3 text-emerald-400" />
-                        <span className="text-sm font-bold text-emerald-400">
+                        <span className="text-xs sm:text-sm font-bold text-emerald-400">
                           ₺{item.priceDifference.toFixed(2)}
                         </span>
                       </div>
