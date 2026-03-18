@@ -230,7 +230,7 @@ export default function CartPage() {
   const hasItems = items.length > 0;
 
   return (
-    <div className="mx-auto max-w-6xl space-y-6">
+    <div className="mx-auto max-w-[1600px] space-y-6">
       {/* Başlık */}
       <div>
         <h1 className="text-2xl font-bold text-zinc-100">Alışveriş Sepeti</h1>
@@ -282,7 +282,7 @@ export default function CartPage() {
               )
             }
             disabled={isAdding || searchQuery.trim().length < 2}
-            className="flex items-center gap-2 rounded-xl bg-emerald-500 px-6 py-3.5 text-sm font-bold text-black transition-all hover:bg-emerald-400 disabled:opacity-50 disabled:hover:bg-emerald-500"
+            className="flex items-center gap-2 rounded-xl bg-emerald-500 px-6 py-3.5 text-sm font-bold text-black shadow-lg shadow-emerald-500/20 transition-all hover:bg-emerald-400 disabled:opacity-50 disabled:hover:bg-emerald-500"
           >
             {isAdding ? (
               <Loader2 className="h-4 w-4 animate-spin" />
@@ -316,7 +316,7 @@ export default function CartPage() {
           <Loader2 className="mr-2 h-6 w-6 animate-spin" /> Sepet yükleniyor...
         </div>
       ) : !hasItems ? (
-        <div className="flex flex-col items-center justify-center rounded-2xl border border-zinc-800 bg-zinc-900 py-20 text-center">
+        <div className="flex flex-col items-center justify-center rounded-2xl border border-zinc-800 bg-zinc-950 py-20 text-center">
           <ShoppingCart className="mb-4 h-16 w-16 text-zinc-800" />
           <p className="text-lg font-semibold text-zinc-400">Sepetiniz boş</p>
           <p className="mt-1 text-sm text-zinc-600">
@@ -338,7 +338,7 @@ export default function CartPage() {
                 })}
               </p>
             </div>
-            <div className="rounded-2xl border border-zinc-800 bg-zinc-900 p-5">
+            <div className="rounded-2xl border border-zinc-800 bg-zinc-950 p-5">
               <p className="text-xs font-semibold uppercase tracking-wider text-zinc-500">
                 2. En Ucuz Toplam
               </p>
@@ -393,7 +393,7 @@ export default function CartPage() {
                 return (
                   <div
                     key={marketName}
-                    className={`rounded-2xl border bg-zinc-900/80 overflow-hidden ${cfg.border}`}
+                    className={`rounded-2xl border bg-zinc-950/60 overflow-hidden ${cfg.border}`}
                   >
                     {/* Market başlığı */}
                     <div
@@ -469,7 +469,7 @@ export default function CartPage() {
             <h2 className="mb-3 text-sm font-bold uppercase tracking-wider text-zinc-400">
               Sepetinizdeki Ürünler ({items.length})
             </h2>
-            <div className="rounded-2xl border border-zinc-800 bg-zinc-900 overflow-hidden">
+            <div className="rounded-2xl border border-zinc-800 bg-zinc-950 overflow-hidden">
               <div className="divide-y divide-zinc-800/60">
                 {items.map((item) => (
                   <div
@@ -579,7 +579,7 @@ export default function CartPage() {
           </div>
 
           {/* Disclaimer */}
-          <div className="rounded-xl border border-zinc-800/60 bg-zinc-900/50 px-5 py-3">
+          <div className="rounded-xl border border-zinc-800/60 bg-zinc-950/50 px-5 py-3">
             <div className="flex items-start gap-2">
               <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0 text-zinc-600" />
               <div className="text-[11px] leading-relaxed text-zinc-600">

@@ -46,7 +46,8 @@ export function SummaryCards() {
           return;
         }
         setData({
-          totalSpending: d.totalExpense ?? 0,
+          // UI kartı "Aylık Toplam Harcama" olduğu için doğru alan: currentMonthExpenseTotal
+          totalSpending: d.currentMonthExpenseTotal ?? 0,
           potentialSavings: d.potentialMonthlySavings ?? 0,
           spendingScore: d.smartSpendingScore ?? 0,
           savingsProgress: d.savingsGoalProgressPct ?? 0,

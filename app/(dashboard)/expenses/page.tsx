@@ -615,7 +615,7 @@ export default function ExpensesPage() {
                       <p className="text-xs text-zinc-500">
                         {t.description ? `${t.description} · ` : ""}
                         {t.type === "EXPENSE"
-                          ? `${t.paymentMethod === "CARD" ? "Kart" : "Nakit"} · `
+                          ? `${t.paymentMethod === "CARD" ? "💳 Kart" : "💵 Nakit"} · `
                           : ""}
                         {formatDate(t.transactionDate)}
                       </p>
